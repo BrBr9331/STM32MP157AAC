@@ -1,0 +1,548 @@
+NOTICE:  CPU: STM32MP157AAC Rev.Z
+NOTICE:  Model: 100ASK ASK-STM32MP157-512D PRO V1 Board
+INFO:    Reset reason (0x15):
+INFO:      Power-on Reset (rst_por)
+INFO:    Using EMMC
+INFO:      Instance 2
+INFO:    Boot used partition fsbl1
+NOTICE:  BL2: v2.2-r1.0(debug):85b7ab8
+NOTICE:  BL2: Built : 09:15:17, Aug 16 2026
+INFO:    Using crypto library 'stm32_crypto_lib'
+INFO:    BL2: Doing platform setup
+INFO:    RAM: DDR3-1066/888 bin G 2x2Gb 533MHz v1.44
+INFO:    Memory size = 0x20000000 (512 MB)
+INFO:    BL2 runs SP_MIN setup
+INFO:    BL2: Loading image id 4
+INFO:    Loading image id=4 at address 0x2ffed000
+INFO:    Image id=4 loaded: 0x2ffed000 - 0x2ffff000
+INFO:    BL2: Loading image id 5
+INFO:    Loading image id=5 at address 0xc0100000
+INFO:    STM32 Image size : 869897
+INFO:    Image id=5 loaded: 0xc0100000 - 0xc01d4609
+WARNING: Skip signature check (header option)
+NOTICE:  ROTPK is not deployed on platform. Skipping ROTPK verification.
+NOTICE:  BL2: Booting BL32
+INFO:    Entry point address = 0x2ffed000
+INFO:    SPSR = 0x1d3
+NOTICE:  SP_MIN: v2.2-r1.0(debug):85b7ab8
+NOTICE:  SP_MIN: Built : 09:15:17, Aug 16 2026
+INFO:    ARM GICv2 driver initialized
+INFO:    stm32mp IWDG1 (12): Secure
+INFO:    ETZPC: CRYP1 (9) could be non secure
+INFO:    SP_MIN: Initializing runtime services
+INFO:    SP_MIN: Preparing exit to normal world
+
+
+U-Boot 2020.01-stm32mp-r1 (Aug 16 2026 - 09:15:35 +0800)
+
+CPU: STM32MP157AAC Rev.Z
+Model: 100ASK ASK-STM32MP157-512D PRO V1 Board
+Board: stm32mp1 in trusted mode (st,stm32mp157c-100ask-512d-v1)
+DRAM:  512 MiB
+Clocks:
+- MPU : 650 MHz
+- MCU : 208.878 MHz
+- AXI : 266.500 MHz
+- PER : 24 MHz
+- DDR : 533 MHz
+WDT:   Started with servicing (32s timeout)
+NAND:  0 MiB
+MMC:   STM32 SD/MMC: 0, STM32 SD/MMC: 1
+Loading Environment from MMC... OK
+In:    serial
+Out:   serial
+Err:   serial
+Net:   eth0: ethernet@5800a000
+Press SPACE to abort autoboot in 1 seconds
+Boot over mmc1!
+switch to partitions #0, OK
+mmc1(part 0) is current device
+Scanning mmc 1:2...
+Found /mmc1_extlinux/stm32mp157c-100ask-512d-v1_extlinux.conf
+Retrieving file: /mmc1_extlinux/stm32mp157c-100ask-512d-v1_extlinux.conf
+210 bytes read in 38 ms (4.9 KiB/s)
+1:	100ask-lcd
+Retrieving file: /uImage
+8171384 bytes read in 316 ms (24.7 MiB/s)
+append: root=/dev/mmcblk2p3 rootwait rw console=ttySTM0,115200
+Retrieving file: /stm32mp157c-100ask-512d-lcd-v1.dtb
+74438 bytes read in 41 ms (1.7 MiB/s)
+## Booting kernel from Legacy Image at c2000000 ...
+   Image Name:   Linux-5.4.31
+   Created:      2026-08-15  15:32:09 UTC
+   Image Type:   ARM Linux Kernel Image (uncompressed)
+   Data Size:    8171320 Bytes = 7.8 MiB
+   Load Address: c2000040
+   Entry Point:  c2000040
+   Verifying Checksum ... OK
+## Flattened Device Tree blob at c4000000
+   Booting using the fdt blob at 0xc4000000
+   XIP Kernel Image
+   Loading Device Tree to cffea000, end cffff2c5 ... OK
+
+Starting kernel ...
+
+[    0.000000] Booting Linux on physical CPU 0x0
+[    0.000000] Linux version 5.4.31 (book@100ask) (gcc version 8.4.0 (Buildroot 2020.02-g85b7ab8)) #1 SMP PREEMPT Sat Aug 15 23:24:55 CST 2026
+[    0.000000] CPU: ARMv7 Processor [410fc075] revision 5 (ARMv7), cr=10c5387d
+[    0.000000] CPU: div instructions available: patching division code
+[    0.000000] CPU: PIPT / VIPT nonaliasing data cache, VIPT aliasing instruction cache
+[    0.000000] OF: fdt: Machine model: 100ASK YA157C v2 www.100ask.com
+[    0.000000] Memory policy: Data cache writealloc
+[    0.000000] Reserved memory: created DMA memory pool at 0x10000000, size 0 MiB
+[    0.000000] OF: reserved mem: initialized node mcuram2@10000000, compatible id shared-dma-pool
+[    0.000000] Reserved memory: created DMA memory pool at 0x10040000, size 0 MiB
+[    0.000000] OF: reserved mem: initialized node vdev0vring0@10040000, compatible id shared-dma-pool
+[    0.000000] Reserved memory: created DMA memory pool at 0x10041000, size 0 MiB
+[    0.000000] OF: reserved mem: initialized node vdev0vring1@10041000, compatible id shared-dma-pool
+[    0.000000] Reserved memory: created DMA memory pool at 0x10042000, size 0 MiB
+[    0.000000] OF: reserved mem: initialized node vdev0buffer@10042000, compatible id shared-dma-pool
+[    0.000000] Reserved memory: created DMA memory pool at 0x30000000, size 0 MiB
+[    0.000000] OF: reserved mem: initialized node mcuram@30000000, compatible id shared-dma-pool
+[    0.000000] Reserved memory: created DMA memory pool at 0x38000000, size 0 MiB
+[    0.000000] OF: reserved mem: initialized node retram@38000000, compatible id shared-dma-pool
+[    0.000000] cma: Reserved 128 MiB at 0xd2000000
+[    0.000000] psci: probing for conduit method from DT.
+[    0.000000] psci: PSCIv1.1 detected in firmware.
+[    0.000000] psci: Using standard PSCI v0.2 function IDs
+[    0.000000] psci: MIGRATE_INFO_TYPE not supported.
+[    0.000000] psci: SMC Calling Convention v1.0
+[    0.000000] percpu: Embedded 20 pages/cpu s50124 r8192 d23604 u81920
+[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 113536
+[    0.000000] Kernel command line: root=/dev/mmcblk2p3 rootwait rw console=ttySTM0,115200
+[    0.000000] Dentry cache hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    0.000000] Inode-cache hash table entries: 32768 (order: 5, 131072 bytes, linear)
+[    0.000000] mem auto-init: stack:off, heap alloc:off, heap free:off
+[    0.000000] Memory: 303880K/458752K available (12288K kernel code, 962K rwdata, 3516K rodata, 1024K init, 226K bss, 23800K reserved, 131072K cma-reserved, 0K highmem)
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=2, Nodes=1
+[    0.000000] rcu: Preemptible hierarchical RCU implementation.
+[    0.000000] rcu: 	RCU event tracing is enabled.
+[    0.000000] 	Tasks RCU enabled.
+[    0.000000] rcu: RCU calculated value of scheduler-enlistment delay is 10 jiffies.
+[    0.000000] NR_IRQS: 16, nr_irqs: 16, preallocated irqs: 16
+[    0.000000] random: get_random_bytes called from start_kernel+0x31c/0x4e4 with crng_init=0
+[    0.000000] arch_timer: cp15 timer(s) running at 24.00MHz (virt).
+[    0.000000] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x588fe9dc0, max_idle_ns: 440795202592 ns
+[    0.000009] sched_clock: 56 bits at 24MHz, resolution 41ns, wraps every 4398046511097ns
+[    0.000027] Switching to timer-based delay loop, resolution 41ns
+[    0.001846] Console: colour dummy device 80x30
+[    0.001897] Calibrating delay loop (skipped), value calculated using timer frequency.. 48.00 BogoMIPS (lpj=240000)
+[    0.001918] pid_max: default: 32768 minimum: 301
+[    0.002179] Mount-cache hash table entries: 1024 (order: 0, 4096 bytes, linear)
+[    0.002200] Mountpoint-cache hash table entries: 1024 (order: 0, 4096 bytes, linear)
+[    0.003493] CPU: Testing write buffer coherency: ok
+[    0.004021] /cpus/cpu@0 missing clock-frequency property
+[    0.004056] /cpus/cpu@1 missing clock-frequency property
+[    0.004074] CPU0: thread -1, cpu 0, socket 0, mpidr 80000000
+[    0.059819] Setting up static identity map for 0xc0100000 - 0xc0100060
+[    0.079792] rcu: Hierarchical SRCU implementation.
+[    0.105185] smp: Bringing up secondary CPUs ...
+[    0.180453] CPU1: thread -1, cpu 1, socket 0, mpidr 80000001
+[    0.180675] smp: Brought up 1 node, 2 CPUs
+[    0.180700] SMP: Total of 2 processors activated (96.00 BogoMIPS).
+[    0.180711] CPU: All CPU(s) started in SVC mode.
+[    0.181559] devtmpfs: initialized
+[    0.210034] VFP support v0.3: implementor 41 architecture 2 part 30 variant 7 rev 5
+[    0.210675] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 19112604462750000 ns
+[    0.210708] futex hash table entries: 512 (order: 3, 32768 bytes, linear)
+[    0.217457] pinctrl core: initialized pinctrl subsystem
+[    0.219833] NET: Registered protocol family 16
+[    0.232978] DMA: preallocated 256 KiB pool for atomic coherent allocations
+[    0.235499] hw-breakpoint: found 5 (+1 reserved) breakpoint and 4 watchpoint registers.
+[    0.235520] hw-breakpoint: maximum watchpoint size is 8 bytes.
+[    0.235910] Serial: AMBA PL011 UART driver
+[    0.239060] stm32-pm-domain pm_domain: domain core-ret-power-domain registered
+[    0.239111] stm32-pm-domain pm_domain: subdomain core-power-domain registered
+[    0.239129] stm32-pm-domain pm_domain: domains probed
+[    0.291739] gpio-regulator regulators: No 'states' property found
+[    0.291782] gpio-regulator: probe of regulators failed with error -22
+[    0.293164] SCSI subsystem initialized
+[    0.294031] usbcore: registered new interface driver usbfs
+[    0.294125] usbcore: registered new interface driver hub
+[    0.294279] usbcore: registered new device driver usb
+[    0.294668] pps_core: LinuxPPS API ver. 1 registered
+[    0.294683] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.294718] PTP clock support registered
+[    0.295084] EDAC MC: Ver: 3.0.0
+[    0.296524] Advanced Linux Sound Architecture Driver Initialized.
+[    0.297411] Bluetooth: Core ver 2.22
+[    0.297500] NET: Registered protocol family 31
+[    0.297513] Bluetooth: HCI device and connection manager initialized
+[    0.297537] Bluetooth: HCI socket layer initialized
+[    0.297556] Bluetooth: L2CAP socket layer initialized
+[    0.297593] Bluetooth: SCO socket layer initialized
+[    0.298526] clocksource: Switched to clocksource arch_sys_counter
+[    1.066275] thermal_sys: Registered thermal governor 'step_wise'
+[    1.066895] NET: Registered protocol family 2
+[    1.067994] tcp_listen_portaddr_hash hash table entries: 512 (order: 0, 6144 bytes, linear)
+[    1.068047] TCP established hash table entries: 4096 (order: 2, 16384 bytes, linear)
+[    1.068115] TCP bind hash table entries: 4096 (order: 3, 32768 bytes, linear)
+[    1.068212] TCP: Hash tables configured (established 4096 bind 4096)
+[    1.068363] UDP hash table entries: 256 (order: 1, 8192 bytes, linear)
+[    1.068409] UDP-Lite hash table entries: 256 (order: 1, 8192 bytes, linear)
+[    1.068883] NET: Registered protocol family 1
+[    1.069839] RPC: Registered named UNIX socket transport module.
+[    1.069860] RPC: Registered udp transport module.
+[    1.069871] RPC: Registered tcp transport module.
+[    1.069881] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    1.071700] hw perfevents: enabled with armv7_cortex_a7 PMU driver, 5 counters available
+[    1.073846] Initialise system trusted keyrings
+[    1.074233] workingset: timestamp_bits=14 max_order=17 bucket_order=3
+[    1.086767] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    1.098165] NFS: Registering the id_resolver key type
+[    1.098221] Key type id_resolver registered
+[    1.098233] Key type id_legacy registered
+[    1.098463] ntfs: driver 2.1.32 [Flags: R/O].
+[    1.099103] jffs2: version 2.2. (NAND) 漏 2001-2006 Red Hat, Inc.
+[    1.099885] fuse: init (API version 7.31)
+[    1.153994] NET: Registered protocol family 38
+[    1.154022] Key type asymmetric registered
+[    1.154035] Asymmetric key parser 'x509' registered
+[    1.154131] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 246)
+[    1.154149] io scheduler mq-deadline registered
+[    1.154162] io scheduler kyber registered
+[    1.164733] STM32 USART driver initialized
+[    1.166344] ar8035 phy init
+[    1.166808] the phy gpio failed
+[    1.188179] brd: module loaded
+[    1.202849] loop: module loaded
+[    1.209404] libphy: Fixed MDIO Bus: probed
+[    1.211296] CAN device driver interface
+[    1.213921] PPP generic driver version 2.4.2
+[    1.214270] PPP BSD Compression module registered
+[    1.214286] PPP Deflate Compression module registered
+[    1.214313] PPP MPPE Compression module registered
+[    1.214327] NET: Registered protocol family 24
+[    1.214373] SLIP: version 0.8.4-NET3.019-NEWTTY (dynamic channels, max=256) (6 bit encapsulation enabled).
+[    1.214384] CSLIP: code copyright 1989 Regents of the University of California.
+[    1.214393] SLIP linefill/keepalive option.
+[    1.214408] pegasus: v0.9.3 (2013/04/25), Pegasus/Pegasus II USB Ethernet driver
+[    1.214513] usbcore: registered new interface driver pegasus
+[    1.214619] usbcore: registered new interface driver r8152
+[    1.214697] usbcore: registered new interface driver asix
+[    1.214759] usbcore: registered new interface driver ax88179_178a
+[    1.214821] usbcore: registered new interface driver cdc_ether
+[    1.214911] usbcore: registered new interface driver smsc75xx
+[    1.214991] usbcore: registered new interface driver smsc95xx
+[    1.215052] usbcore: registered new interface driver net1080
+[    1.215114] usbcore: registered new interface driver cdc_subset
+[    1.215172] usbcore: registered new interface driver zaurus
+[    1.215262] usbcore: registered new interface driver cdc_ncm
+[    1.216992] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    1.217049] ehci-platform: EHCI generic platform driver
+[    1.217565] ohci_hcd: USB 1.1 'Open' Host Controller (OHCI) Driver
+[    1.217604] ohci-platform: OHCI generic platform driver
+[    1.218918] usbcore: registered new interface driver cdc_acm
+[    1.218935] cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+[    1.219033] usbcore: registered new interface driver usblp
+[    1.219097] usbcore: registered new interface driver cdc_wdm
+[    1.219159] usbcore: registered new interface driver uas
+[    1.219243] usbcore: registered new interface driver usb-storage
+[    1.219412] usbcore: registered new interface driver usbserial_generic
+[    1.219465] usbserial: USB Serial support registered for generic
+[    1.219523] usbcore: registered new interface driver option
+[    1.219579] usbserial: USB Serial support registered for GSM modem (1-port)
+[    1.224832] i2c /dev entries driver
+[    1.230096] stm32-cpufreq stm32-cpufreq: Failed to get chip info: -517
+[    1.234364] sdhci: Secure Digital Host Controller Interface driver
+[    1.234379] sdhci: Copyright(c) Pierre Ossman
+[    1.234390] Synopsys Designware Multimedia Card Interface Driver
+[    1.235024] sdhci-pltfm: SDHCI platform and OF driver helper
+[    1.236357] ledtrig-cpu: registered to indicate activity on CPUs
+[    1.238851] usbcore: registered new interface driver usbhid
+[    1.238869] usbhid: USB HID core driver
+[    1.238880] dtbocfg_module_init
+[    1.238932] dtbocfg_module_init: OK
+[    1.239327] arm-smc-mbox mailbox-0: ARM SMC mailbox enabled.
+[    1.239460] arm-smc-mbox mailbox-1: ARM SMC mailbox enabled.
+[    1.241239] remoteproc remoteproc0: releasing m4
+[    1.244526] Unable to get STM32 DDR PMU clock
+[    1.250153] drop_monitor: Initializing network drop monitor service
+[    1.250511] NET: Registered protocol family 17
+[    1.250548] can: controller area network core (rev 20170425 abi 9)
+[    1.250684] NET: Registered protocol family 29
+[    1.250702] can: raw protocol (rev 20170425)
+[    1.250714] can: broadcast manager protocol (rev 20170425 t)
+[    1.250733] can: netlink gateway (rev 20190810) max_hops=1
+[    1.251239] Bluetooth: RFCOMM TTY layer initialized
+[    1.251276] Bluetooth: RFCOMM socket layer initialized
+[    1.251330] Bluetooth: RFCOMM ver 1.11
+[    1.251359] Bluetooth: BNEP (Ethernet Emulation) ver 1.3
+[    1.251371] Bluetooth: BNEP filters: protocol multicast
+[    1.251391] Bluetooth: BNEP socket layer initialized
+[    1.251405] Bluetooth: HIDP (Human Interface Emulation) ver 1.2
+[    1.251423] Bluetooth: HIDP socket layer initialized
+[    1.252014] Key type dns_resolver registered
+[    1.252205] ThumbEE CPU extension supported.
+[    1.252232] Registering SWP/SWPB emulation handler
+[    1.252680] registered taskstats version 1
+[    1.252695] Loading compiled-in X.509 certificates
+[    1.263936] Loaded X.509 cert 'Build time autogenerated kernel key: a551a3bcaf9a62271059adf2e1003b2f3df06de0'
+[    1.290964] arm-scmi firmware:scmi-0: SCMI Protocol v2.0 'ST:' Firmware version 0x0
+[    1.295213] remoteproc remoteproc0: releasing m4
+[    1.296676] Unable to get STM32 DDR PMU clock
+[    1.320289] debugfs: Directory 'cpu0' with parent 'opp' already present!
+[    1.329961] remoteproc remoteproc0: releasing m4
+[    1.331435] Unable to get STM32 DDR PMU clock
+[    1.371074] stm32-mdma 58000000.dma: STM32 MDMA driver registered
+[    1.375638] stm32-dma 48000000.dma: STM32 DMA driver registered
+[    1.377770] stm32-dma 48001000.dma: STM32 DMA driver registered
+[    1.378419] reg11: supplied by regulator-dummy
+[    1.379009] reg18: supplied by regulator-dummy
+[    1.379421] usb33: supplied by regulator-dummy
+[    1.398927] stm_thermal 50028000.thermal: stm_thermal_probe: Driver initialized successfully
+[    1.401711] debugfs: Directory 'cpu0' with parent 'opp' already present!
+[    1.404277] random: fast init done
+[    1.405831] stm32-crc32 58009000.crc: Initialized
+[    1.407505] stm32-hash 54002000.hash: will run requests pump with realtime priority
+[    1.408752] random: crng init done
+[    1.412633] stm32-hash 54002000.hash: Init HASH done HW ver 23 DMA mode 1
+[    1.425026] remoteproc remoteproc0: releasing m4
+[    1.426822] stm32-ddr-pmu: probed (ID=0x00140061 VER=0x00000010), DDR@533MHz
+[    1.429274] /soc/interrupt-controller@5000d000: bank0
+[    1.429295] /soc/interrupt-controller@5000d000: bank1
+[    1.429308] /soc/interrupt-controller@5000d000: bank2
+[    1.431593] stm32mp157-pinctrl soc:pin-controller@50002000: GPIOA bank added
+[    1.432174] stm32mp157-pinctrl soc:pin-controller@50002000: GPIOB bank added
+[    1.432693] stm32mp157-pinctrl soc:pin-controller@50002000: GPIOC bank added
+[    1.433228] stm32mp157-pinctrl soc:pin-controller@50002000: GPIOD bank added
+[    1.433738] stm32mp157-pinctrl soc:pin-controller@50002000: GPIOE bank added
+[    1.434271] stm32mp157-pinctrl soc:pin-controller@50002000: GPIOF bank added
+[    1.434810] stm32mp157-pinctrl soc:pin-controller@50002000: GPIOG bank added
+[    1.435301] stm32mp157-pinctrl soc:pin-controller@50002000: GPIOH bank added
+[    1.435803] stm32mp157-pinctrl soc:pin-controller@50002000: GPIOI bank added
+[    1.436106] stm32mp157-pinctrl soc:pin-controller@50002000: Pinctrl STM32 initialized
+[    1.437192] stm32mp157-pinctrl soc:pin-controller-z@54004000: GPIOZ bank added
+[    1.437223] stm32mp157-pinctrl soc:pin-controller-z@54004000: Pinctrl STM32 initialized
+[    1.439671] stm32-usbphyc 5a006000.usbphyc: registered rev:1.0
+[    1.441182] stm32-usart 40010000.serial: interrupt mode for rx (no dma)
+[    1.441205] stm32-usart 40010000.serial: interrupt mode for tx (no dma)
+[    1.441244] 40010000.serial: ttySTM0 at MMIO 0x40010000 (irq = 58, base_baud = 4000000) is a stm32-usart
+[    2.823636] printk: console [ttySTM0] enabled
+[    2.829917] 44003000.serial: ttySTM1 at MMIO 0x44003000 (irq = 59, base_baud = 4000000) is a stm32-usart
+[    2.839608] stm32-usart 5c000000.serial: interrupt mode for rx (no dma)
+[    2.844765] stm32-usart 5c000000.serial: interrupt mode for tx (no dma)
+[    2.851459] 5c000000.serial: ttySTM2 at MMIO 0x5c000000 (irq = 60, base_baud = 4000000) is a stm32-usart
+[    2.861126] serial serial0: tty port ttySTM2 registered
+[    2.872765] inv-mpu6000-spi spi0.0: mounting matrix not found: using identity...
+[    2.878861] inv-mpu6000-spi spi0.0: spi0.0 supply vddio not found, using dummy regulator
+[    3.102292] spi_stm32 44009000.spi: driver initialized
+[    3.107774] m_can_platform 4400f000.can: m_can device registered (irq=55, version=32)
+[    3.116149] stm32-dwmac 5800a000.ethernet: PTP uses main clock
+[    3.120603] stm32-dwmac 5800a000.ethernet: no reset control found
+[    3.126648] stm32-dwmac 5800a000.ethernet: No phy clock provided...
+[    3.133564] stm32-dwmac 5800a000.ethernet: User ID: 0x40, Synopsys ID: 0x42
+[    3.139893] stm32-dwmac 5800a000.ethernet: 	DWMAC4/5
+[    3.144781] stm32-dwmac 5800a000.ethernet: DMA HW capability register supported
+[    3.152109] stm32-dwmac 5800a000.ethernet: RX Checksum Offload Engine supported
+[    3.159407] stm32-dwmac 5800a000.ethernet: TX Checksum insertion supported
+[    3.166254] stm32-dwmac 5800a000.ethernet: Wake-Up On Lan supported
+[    3.172550] stm32-dwmac 5800a000.ethernet: TSO supported
+[    3.177819] stm32-dwmac 5800a000.ethernet: Enable RX Mitigation via HW Watchdog Timer
+[    3.185674] stm32-dwmac 5800a000.ethernet: TSO feature enabled
+[    3.191936] libphy: stmmac: probed
+[    3.195148] yzhang..get YT8511, abt to set 125m clk out, phyaddr=6, phyid=0000010a
+[    3.203453] yt8511_config_out_125m, phy clk out, val=0x008057
+[    3.208539] yzhang..8511 set 125m clk out, reg=0x8057
+[    3.215731] dwc2 49000000.usb-otg: 49000000.usb-otg supply vusb_d not found, using dummy regulator
+[    3.223478] dwc2 49000000.usb-otg: 49000000.usb-otg supply vusb_a not found, using dummy regulator
+[    3.358814] dwc2 49000000.usb-otg: EPs: 9, dedicated fifos, 952 entries in SPRAM
+[    3.365765] dwc2 49000000.usb-otg: DWC OTG Controller
+[    3.369913] dwc2 49000000.usb-otg: new USB bus registered, assigned bus number 1
+[    3.377238] dwc2 49000000.usb-otg: irq 65, io mem 0x49000000
+[    3.383209] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 5.04
+[    3.391138] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    3.398312] usb usb1: Product: DWC OTG Controller
+[    3.403033] usb usb1: Manufacturer: Linux 5.4.31 dwc2_hsotg
+[    3.408600] usb usb1: SerialNumber: 49000000.usb-otg
+[    3.414457] hub 1-0:1.0: USB hub found
+[    3.417327] hub 1-0:1.0: 1 port detected
+[    3.422976] ehci-platform 5800d000.usbh-ehci: EHCI Host Controller
+[    3.427730] ehci-platform 5800d000.usbh-ehci: new USB bus registered, assigned bus number 2
+[    3.436577] ehci-platform 5800d000.usbh-ehci: irq 66, io mem 0x5800d000
+[    3.468578] ehci-platform 5800d000.usbh-ehci: USB 2.0 started, EHCI 1.00
+[    3.474264] usb usb2: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 5.04
+[    3.482123] usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    3.489314] usb usb2: Product: EHCI Host Controller
+[    3.494156] usb usb2: Manufacturer: Linux 5.4.31 ehci_hcd
+[    3.499575] usb usb2: SerialNumber: 5800d000.usbh-ehci
+[    3.505591] hub 2-0:1.0: USB hub found
+[    3.508472] hub 2-0:1.0: 2 ports detected
+[    3.513881] ohci-platform 5800c000.usbh-ohci: Generic Platform OHCI controller
+[    3.519754] ohci-platform 5800c000.usbh-ohci: new USB bus registered, assigned bus number 3
+[    3.528413] ohci-platform 5800c000.usbh-ohci: irq 52, io mem 0x5800c000
+[    3.602886] usb usb3: New USB device found, idVendor=1d6b, idProduct=0001, bcdDevice= 5.04
+[    3.609741] usb usb3: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    3.616906] usb usb3: Product: Generic Platform OHCI controller
+[    3.622847] usb usb3: Manufacturer: Linux 5.4.31 ohci_hcd
+[    3.628207] usb usb3: SerialNumber: 5800c000.usbh-ohci
+[    3.635164] hub 3-0:1.0: USB hub found
+[    3.637509] hub 3-0:1.0: 2 ports detected
+[    3.644323] stm32_rtc 5c004000.rtc: registered as rtc0
+[    3.648831] stm32_rtc 5c004000.rtc: Date/Time must be initialized
+[    3.654090] stm32_rtc 5c004000.rtc: registered rev:1.2
+[    3.680251] stm32f7-i2c 40012000.i2c: doesn't use DMA
+[    3.686013] fusb302 0-0022: Can't get property of role, set role to default DRP
+[    3.699782] fusb302 0-0022: port 0 probe success with role ROLE_MODE_DRP, try_role ROLE_MODE_NONE
+[    3.707932] stm32f7-i2c 40012000.i2c: STM32F7 I2C-0 bus adapter
+[    3.734346] stm32f7-i2c 40013000.i2c: doesn't use DMA
+[    3.738691] stm32f7-i2c 40013000.i2c: STM32F7 I2C-1 bus adapter
+[    3.765067] stm32f7-i2c 5c002000.i2c: doesn't use DMA
+[    3.770111] Goodix-TS 2-005d: 2-005d supply AVDD28 not found, using dummy regulator
+[    3.776466] Goodix-TS 2-005d: 2-005d supply VDDIO not found, using dummy regulator
+[    3.900026] Goodix-TS 2-005d: ID 911, version: 1060
+[    3.904246] Goodix-TS 2-005d: Direct firmware load for goodix_911_cfg.bin failed with error -2
+[    3.929211] input: Goodix Capacitive TouchScreen as /devices/platform/soc/5c002000.i2c/i2c-2/2-005d/input/input0
+[    3.941923] stm32f7-i2c 5c002000.i2c: STM32F7 I2C-2 bus adapter
+[    3.949071] mmci-pl18x 48004000.sdmmc: allocated mmc-pwrseq
+[    3.953635] mmci-pl18x 48004000.sdmmc: mmc0: PL180 manf 53 rev1 at 0x48004000 irq 43,0 (pio)
+[    3.989766] mmci-pl18x 58005000.sdmmc: mmc1: PL180 manf 53 rev2 at 0x58005000 irq 49,0 (pio)
+[    4.013782] mmc0: queuing unknown CIS tuple 0x80 (2 bytes)
+[    4.019251] mmc0: queuing unknown CIS tuple 0x80 (3 bytes)
+[    4.025416] mmci-pl18x 58007000.sdmmc: mmc2: PL180 manf 53 rev2 at 0x58007000 irq 50,0 (pio)
+[    4.034681] mmc0: queuing unknown CIS tuple 0x80 (3 bytes)
+[    4.042431] mmc0: queuing unknown CIS tuple 0x80 (7 bytes)
+[    4.051972] mmc0: queuing unknown CIS tuple 0x81 (9 bytes)
+[    4.063913] stm32-ipcc 4c001000.mailbox: ipcc rev:1.0 enabled, 6 chans, proc 0
+[    4.073725] stm32-rproc mlahb:m4@10000000: wdg irq registered
+[    4.080230] remoteproc remoteproc0: m4 is available
+[    4.085790] stm32mp157-pinctrl soc:pin-controller@50002000: missing pins property in node pins .
+[    4.093268] stm32-adc-core: probe of 48003000.adc failed with error -22
+[    4.111723] [drm] Supports vblank timestamp caching Rev 2 (21.10.2013).
+[    4.116874] [drm] Driver supports precise vblank timestamp query.
+[    4.127129] [drm] Initialized stm 1.0.0 20170330 for 5a001000.display-controller on minor 0
+[    4.188274] mmc2: new high speed MMC card at address 0001
+[    4.199911] mmcblk2: mmc2:0001 S40004 3.64 GiB 
+[    4.200612] mmcblk2boot0: mmc2:0001 S40004 partition 1 4.00 MiB
+[    4.201323] mmcblk2boot1: mmc2:0001 S40004 partition 2 4.00 MiB
+[    4.202919] mmcblk2rpmb: mmc2:0001 S40004 partition 3 4.00 MiB, chardev (242:0)
+[    4.214785] mmc0: new high speed SDIO card at address 0001
+[    4.233348]  mmcblk2: p1 p2 p3
+[    4.298866] Console: switching to colour frame buffer device 128x37
+[    4.358250] stm32-display 5a001000.display-controller: fb0: stmdrmfb frame buffer device
+[    4.497974] asoc-audio-graph-card sound: wm8960-hifi-Playback <-> 4400a004.audio-controller mapping ok
+[    4.507073] asoc-audio-graph-card sound: wm8960-hifi-Capture <-> 4400a024.audio-controller mapping ok
+[    4.635934] input: joystick as /devices/platform/joystick/input/input1
+[    4.641647] stm32_rtc 5c004000.rtc: setting system clock to 2000-01-01T00:00:09 UTC (946684809)
+[    4.650908] cfg80211: Loading compiled-in X.509 certificates for regulatory database
+[    4.660518] cfg80211: Loaded X.509 cert 'sforshee: 00b28ddf47aef9cea7'
+[    4.665806] platform regulatory.0: Direct firmware load for regulatory.db failed with error -2
+[    4.668438] ALSA device list:
+[    4.674326] cfg80211: failed to load regulatory.db
+[    4.677157]   #0: WM8960-100ASK
+[    4.906520] EXT4-fs (mmcblk2p3): recovery complete
+[    4.911000] EXT4-fs (mmcblk2p3): mounted filesystem with ordered data mode. Opts: (null)
+[    4.918045] VFS: Mounted root (ext4 filesystem) on device 179:3.
+[    4.924759] devtmpfs: mounted
+[    4.928733] Freeing unused kernel memory: 1024K
+[    4.932161] Run /sbin/init as init process
+
+INIT: version  booting
+
+[    5.160212] EXT4-fs (mmcblk2p3): re-mounted. Opts: (null)
+
+INIT: Entering runlevel: 3
+
+Starting syslogd: OK
+Starting klogd: OK
+Running sysctl: OK
+Populating /dev using udev: [    5.754297] udevd[216]: starting version 3.2.9
+[    5.827215] udevd[217]: starting eudev-3.2.9
+[    7.044617] Bluetooth: HCI UART driver ver 2.3
+[    7.047690] Bluetooth: HCI UART protocol H4 registered
+[    7.050669] galcore: loading out-of-tree module taints kernel.
+[    7.121273] Bluetooth: HCI UART protocol BCSP registered
+[    7.139620] Bluetooth: HCI UART protocol LL registered
+[    7.155592] Bluetooth: HCI UART protocol ATH3K registered
+[    7.179655] Bluetooth: HCI UART protocol Three-wire (H5) registered
+[    7.184788] Bluetooth: HCI UART protocol Intel registered
+[    7.253220] Bluetooth: HCI UART protocol Broadcom registered
+[    7.257527] Bluetooth: HCI UART protocol QCA registered
+[    7.257538] Bluetooth: HCI UART protocol AG6XX registered
+[    7.279119] hci_uart_bcm serial0-0: serial0-0 supply vbat not found, using dummy regulator
+[    7.292235] Bluetooth: HCI UART protocol Marvell registered
+[    7.313925] hci_uart_bcm serial0-0: serial0-0 supply vddio not found, using dummy regulator
+[    7.372648] [dhd] dhd_module_init: in Dongle Host Driver, version 100.10.545.11 (r826445-20200610-1)
+[    7.377395] Init with Level=1, Zone=0x0FFFFFFF
+[    7.412560] [dhd] ======== dhd_wlan_init_plat_data ========
+[    7.416707] [dhd] dhd_wlan_init_gpio: gpio_request(131) for WL_REG_ON failed
+[    7.417891] Galcore version 6.4.1.244507
+[    7.423891] [dhd] dhd_wlan_init_gpio: WL_REG_ON=-1
+[    7.423904] [dhd] dhd_wifi_platform_load: Enter
+[    7.437048] [dhd] Power-up adapter 'DHD generic adapter'
+[    7.437292] gckOS_ImportAllocators(151) Allocator: dma
+[    7.449469] [dhd] wifi_platform_set_power = 1, delay: 200 msec
+[    7.453841] [dhd] ======== PULL WL_REG_ON(-1) HIGH! ========
+[    7.456697] gckOS_ImportAllocators(151) Allocator: user
+[    7.477243] gckOS_ImportAllocators(151) Allocator: dma
+[    7.492392] gckOS_ImportAllocators(151) Allocator: dmabuf
+[    7.496332] gckOS_ImportAllocators(151) Allocator: reserved-mem
+[    7.739465] Bluetooth: hci0: BCM: chip id 115
+[    7.742832] Bluetooth: hci0: BCM: features 0x0e
+[    7.748145] Bluetooth: hci0: BCM43430B0
+[    7.750796] Bluetooth: hci0: BCM (002.001.012) build 0000
+[    7.798575] [dhd] wifi_platform_bus_enumerate device present 1
+[    7.802950] [dhd] ======== Card detection to detect SDIO card! ========
+[    7.825982] [dhd] bcmsdh_register: register client driver
+[    7.830570] [dhd] bcmsdh_sdmmc_probe: Enter num=1
+[    7.835542] [dhd] bcmsdh_sdmmc_probe: Enter num=2
+[    7.839618] [dhd] bus num (host idx)=0, slot num (rca)=1
+[    7.844624] [dhd] found adapter info 'DHD generic adapter'
+[    7.851274] [dhd] sdioh_attach: set sd_f2_blocksize 256
+[    7.855400] [dhd] sdioh_attach: sd clock rate = 0
+[    7.860772] [dhd] dhdsdio_probe : no mutex held. set lock
+[    7.865615] [dhd] F1 signature read @0x18000000=0x1542a9a6
+[    7.875005] [dhd] F1 signature OK, socitype:0x1 chip:0xa9a6 rev:0x2 pkg:0x4
+[    7.881983] [dhd] DHD: dongle ram size is set to 524288(orig 524288) at 0x0
+[    7.887726] [dhd] dhd_conf_set_chiprev : chip=0xa9a6, chiprev=2
+[    7.897216] dhd_attach(): thread:dhd_watchdog_thread:11e started
+[    7.902052] dhd_attach(): thread:dhd_dpc:11f started
+[    7.907055] dhd_attach(): thread:dhd_rxf:120 started
+[    7.911945] [dhd] dhd_deferred_work_init: work queue initialized
+[    7.917706] [dhd] dhd_tcpack_suppress_set: TCP ACK Suppress mode 0 -> mode 2
+[    7.924908] [dhd] sdioh_cis_read: func_cis_ptr[0]=0x1070
+[    7.949980] [dhd] dhdsdio_probe_init: making DHD_BUS_DOWN
+[    7.954598] [dhd] Dongle Host Driver, version 100.10.545.11 (r826445-20200610-1)
+[    7.962990] [dhd] Register interface [wlan0]  MAC: c0:84:7d:8c:b7:c2
+[    7.962990] 
+[    7.969771] [dhd] dhd_bus_devreset: == Power OFF ==
+[    7.974771] [dhd] dhd_bus_stop: making DHD_BUS_DOWN
+[    7.979244] [dhd] dhd_bus_devreset: making dhdpub up FALSE
+[    7.984592] [dhd] dhd_txglom_enable: enable 0
+[    7.989031] [dhd] dhd_bus_devreset: making DHD_BUS_DOWN
+[    7.994155] [dhd] dhd_bus_devreset:  WLAN OFF DONE
+[    7.999316] [dhd] wifi_platform_set_power = 0, delay: 0 msec
+[    8.004606] [dhd] ======== PULL WL_REG_ON(-1) LOW! ========
+[    8.010243] [dhd] dhdsdio_probe : the lock is released.
+[    8.016547] [dhd] dhd_module_init: Exit err=0
+done
+Initializing random number generator: OK
+Saving random seed: OK
+Starting system message bus: done
+Starting rpcbind: [    8.466866] NET: Registered protocol family 10
+[    8.503396] Bluetooth: hci0: BCM (002.001.012) build 0000
+[    8.521239] Segment Routing with IPv6
+OK
+Starting network: OK
+Starting mosquitto: OK
+Starting pulseaudio: OK
+Starting sshd: OK
+Starting NFS statd: OK
+Starting NFS services: OK
+Starting NFS daemon: rpc.nfsd: Unable to access /proc/fs/nfsd errno 2 (No such file or directory).
+Please try, as root, 'mount -t nfsd nfsd /proc/fs/nfsd' and then restart rpc.nfsd to correct the problem
+FAIL
+Starting NFS mountd: OK
+[    9.665775] file system registered
+[    9.737465] read descriptors
+[    9.738990] read strings
+[   10.727126] dwc2 49000000.usb-otg: bound driver configfs-gadget
+[   10.777210] led_drv: module verification failed: signature and/or required key missing - tainting kernel
+[   10.786052] /home/book/Desktop/01_led_stm32mp157/led_drv.c gpio_drv_init line 113
+
+
+Welcome to Buildroot
+
+100ask login: QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-root'
+qt.qpa.input: xkbcommon not available, not performing key mapping
+[   35.048578] vmmcsd_fixed: disabling
