@@ -1,0 +1,27 @@
+>root@100ask:/lib/modules/5.4.31-g893d15a84# sync
+root@100ask:/lib/modules/5.4.31-g893d15a84# reboot
+Broadcast message from root@100ask (console) (Sat Jan  1 07:15:38 2000):
+The system is going down for reboot NOW!
+INIT: Switching to runlevel: 6
+root@100ask:/lib/modules/5.4.31-g893d15a84# No process in pidfile '/var/run/adbd.pid' found running; none killed.
+umount: /dev/usb-ffs/adb: target is busy.
+Shutting down NFS mountd: OK
+Shutting down NFS daemon: FAIL
+Shutting down NFS services: OK
+Stopping NFS statd: OK
+Stopping sshd: OK
+Stopping pulseaudio: OK
+Stopping mosquitto: OK
+Stopping network: [26135.035141] stm32-dwmac 5800a000.ethernet eth0: Link is Down OK
+Stopping rpcbind daemon: OK
+Stopping system message bus: done
+Saving random seed: OK
+Stopping klogd: OK
+Stopping syslogd: OK `这里卡了一段时间`
+root@100ask:/lib/modules/5.4.31-g893d15a84# cd ...
+-bash: cd: ...: No such file or directory
+root@100ask:/lib/modules/5.4.31-g893d15a84# cd ..
+root@100ask:/lib/modules# cd ..
+root@100ask:/lib# cd ~
+root@100ask:~# [26317.848387] nfs: server 192.168.145.128 not responding, still trying
+root@100ask:~#

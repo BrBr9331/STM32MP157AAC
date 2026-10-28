@@ -1,0 +1,7 @@
+eMMC 存储
+├── [硬件分区 1] mmcblk2boot0 / mmcblk2boot1 (TF-A 启动, 禁止修改)
+├── [硬件分区 2] mmcblk2rpmb               (安全重放保护, 开发不管)
+└── [硬件分区 3] mmcblk2                    (用户区主体, 正常操作)
+    ├── mmcblk2p1 (ssbl)    [2MB]       -> U-Boot (SSBL)
+    ├── mmcblk2p2 (rootfs1) [64MB]      -> FAT32, boot 分区 (uImage, dtb等)
+    └── mmcblk2p3 (rootfs2) [剩余空间]   -> ext4, 根文件系统 (系统/驱动/应用)
