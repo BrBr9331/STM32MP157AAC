@@ -1,10 +1,10 @@
 ## 1. ‌Fault Background and Symptom
 
-### 1.1 操作目的
+### 1.1 Operation Objective
 
 自行编译 Linux 内核与设备树，替换板载 eMMC 中的原厂内核镜像，验证内核编译结果，为后续驱动开发做准备。
 
-### 1.2 实验环境
+### 1.2 Experimental Environment
 
 | 层级 | 设备/系统 | IP地址 | 说明 |
 |------|-----------|--------|------|
@@ -12,7 +12,7 @@
 | 虚拟机 | Ubuntu 22.04.5 | 192.168.145.128 | 交叉编译、NFS服务、TFTP服务 |
 | 开发板 | Buildroot + Linux 5.4 | 192.168.145.129 | eMMC本地启动，串口调试 |
 
-### 1.3 复现步骤
+### 1.3 Reproduction Steps
 
 1. 检查挂载文件夹权限 
    
@@ -69,7 +69,8 @@
     reboot
     ```
 
-### 1.4 核心故障现象
+### 1.4 Fault Phenomenon
+
 1. 执行`cp /mnt/lib/modules -rf /lib`时内存耗尽，NFS一边持续收大包、一边往SD卡写，512M内存太小，NFS接收skb分配失败，只要走NFS读取大量小文件，就容易触发这个报错。
     >- 作为初学者，NFS根文件系统启动是值得进一步学习的，SD卡拷贝是固化方式。此处采用手动分批量复制子目录的方式。
     >- 韦东山在后续采用了安卓调试桥(Android Debug Bridge,ADB)完成复制；写驱动优先NFS rootfs，写上层应用、测试小demo用adb push
@@ -82,4 +83,3 @@
     >resetting ...
 
     崩溃发生在 `Starting kernel ...` 之后瞬间，系统反复复位，无法进入根文件系统，这是本次故障的核心问题。
-

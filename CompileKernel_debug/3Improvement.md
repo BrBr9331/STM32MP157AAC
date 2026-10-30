@@ -1,9 +1,10 @@
 ## 3. Improvement and remaining issues
-### 3.1 固化U-Boot，使能上电eMMC启动
 
-当前磁盘分区示意如下图所示（不同固件的设备树编号略有差异，以实际挂载、启动日志为准）
+### 3.1 Solidify U-Boot to Enable Power-on eMMC Boot
 
-@import "logs\DiskPartitionDiagram.txt"
+```bash
+@import "logs/DiskPartitionDiagram.txt"
+```
 
 把启动固件、内核、根文件系统分开，旨在安全升级、故障隔离：(1)内核刷坏了，U-Boot 还在，就能用 TFTP 救砖；(2)根文件系统坏了，内核和 U-Boot 正常，就能进急救模式。
 
@@ -22,7 +23,7 @@ poweroff # 执行关机，成功关机
 ```
 因为已经固化成功，而且不存在地址写入错误，板子再次通电后成功启动。
 
-### 3.2 附带问题：NFS 挂载导致重启阻塞
+### 3.2 Legacy Issue: System Hang Caused by NFS Mounting
 
 **现象：** 手动挂载 `/mnt` NFS 目录后，直接执行 `reboot` 会卡在 NFS 等待，而执行 `poweroff` 可以正常下电。
 

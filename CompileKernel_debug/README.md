@@ -1,41 +1,19 @@
 # STM32MP157: Compile the kernel and device tree, and debug 'prefetch abort'.
 
-> **Date :** 2026-10-21 UTC+8 22:59
-> **Development Board :** STM32MP157AAC based on DongShan Wei`192.168.145.129`
-> **System Environment :** Windows10 22H2 Host , VMware Workstation17 , Linux-5.4
+> **Date :** 2026-10-21 UTC+8 22:59\
+> **Development Board :** STM32MP157AAC based on DongShan Wei\
+> **System Environment :** Windows10 22H2 Host , VMware Workstation17 , Linux-5.4\
 > **Current State :** Solved
 
 **The core of the malfunction lies in the incorrect writing of the uImage loading address. The article does not discuss this fundamental error. Instead aims to troubleshoot the 'prefetch abort' issue encountered in the kernel, providing a beginner's perspective on understanding and learning embedded Linux. This will enable readers to quickly analyze and locate faults, and expand their knowledge to avoid falling into pitfalls again. All commands for the development board are executed through the serial port.**
 
-- [STM32MP157: Compile the kernel and device tree, and debug 'prefetch abort'.](#stm32mp157-compile-the-kernel-and-device-tree-and-debug-prefetch-abort)
-  - [1. ‌Fault Background and Symptom](#1-fault-background-and-symptom)
-    - [1.1 操作目的](#11-操作目的)
-    - [1.2 实验环境](#12-实验环境)
-    - [1.3 复现步骤](#13-复现步骤)
-    - [1.4 核心故障现象](#14-核心故障现象)
-  - [2. Debugging](#2-debugging)
-    - [2.1 初步排除：内核模块不影响启动阶段](#21-初步排除内核模块不影响启动阶段)
-    - [2.2 校验boot分区：排除文件损坏](#22-校验boot分区排除文件损坏)
-      - [2.2.1 易错点澄清：U-Boot 与 Linux 的 MMC 编号不一致](#221-易错点澄清u-boot-与-linux-的-mmc-编号不一致)
-      - [2.2.2 加载地址试探：安全保留内存限制](#222-加载地址试探安全保留内存限制)
-    - [2.3 eMMC本地启动](#23-emmc本地启动)
-    - [2.4 隔离验证：原厂镜像启动](#24-隔离验证原厂镜像启动)
-    - [2.5 根因锁定：LOADADDR 参数错误](#25-根因锁定loadaddr-参数错误)
-  - [3. Improvement and remaining issues](#3-improvement-and-remaining-issues)
-    - [3.1 固化U-Boot，使能上电eMMC启动](#31-固化u-boot使能上电emmc启动)
-    - [3.2 附带问题：NFS 挂载导致重启阻塞](#32-附带问题nfs-挂载导致重启阻塞)
-  - [4. Summary](#4-summary)
-    - [4.1 故障原因总结](#41-故障原因总结)
-    - [4.2 排查方法总结](#42-排查方法总结)
-    - [4.3 知识点总结](#43-知识点总结)
-
 ## 1. ‌Fault Background and Symptom
 
-### 1.1 操作目的
+### 1.1 Operation Objective
 
 自行编译 Linux 内核与设备树，替换板载 eMMC 中的原厂内核镜像，验证内核编译结果，为后续驱动开发做准备。
 
-### 1.2 实验环境
+### 1.2 Experimental Environment
 
 | 层级 | 设备/系统 | IP地址 | 说明 |
 |------|-----------|--------|------|
@@ -43,7 +21,7 @@
 | 虚拟机 | Ubuntu 22.04.5 | 192.168.145.128 | 交叉编译、NFS服务、TFTP服务 |
 | 开发板 | Buildroot + Linux 5.4 | 192.168.145.129 | eMMC本地启动，串口调试 |
 
-### 1.3 复现步骤
+### 1.3 Reproduction Steps
 
 1. 检查挂载文件夹权限 
    
@@ -100,7 +78,8 @@
     reboot
     ```
 
-### 1.4 核心故障现象
+### 1.4 Fault Phenomenon
+
 1. 执行`cp /mnt/lib/modules -rf /lib`时内存耗尽，NFS一边持续收大包、一边往SD卡写，512M内存太小，NFS接收skb分配失败，只要走NFS读取大量小文件，就容易触发这个报错。
     >- 作为初学者，NFS根文件系统启动是值得进一步学习的，SD卡拷贝是固化方式。此处采用手动分批量复制子目录的方式。
     >- 韦东山在后续采用了安卓调试桥(Android Debug Bridge,ADB)完成复制；写驱动优先NFS rootfs，写上层应用、测试小demo用adb push
@@ -116,12 +95,12 @@
 
 ## 2. Debugging
 
-### 2.1 初步排除：内核模块不影响启动阶段
+### 2.1 Preliminary Elimination: Kernel Modules Do Not Affect the Boot Stage
 **思路：** 先划定故障发生的阶段，缩小排查范围。
 `/lib/modules` 目录下的驱动模块，仅在内核启动完成、挂载根文件系统之后才会被加载。而故障发生在 `Starting kernel ...` 瞬间，此时内核刚解压、尚未挂载根文件系统，完全不会读取模块文件。
 **结论：** 本次启动崩溃与拷贝内核模块无关，问题集中在 uImage 内核镜像、dtb 设备树、启动地址、硬件固件兼容性四个方向。
 
-### 2.2 校验boot分区：排除文件损坏
+### 2.2 Verify Boot Partition: Rule Out File Corruption
 **思路：** 异常断电容易导致FAT格式的boot分区文件损坏，先验证文件完整性。进入U-Boot交互界面（上电倒计时按空格），执行如下命令
 
 ```bash
@@ -149,11 +128,11 @@ STM32MP> fatload mmc 1:2 0xc2000000 uImage
 
 **结论：** boot 分区未损坏，内核文件本身可读、校验和正常，排除文件截断、闪存坏块问题。
 
-#### 2.2.1 易错点澄清：U-Boot 与 Linux 的 MMC 编号不一致
+#### 2.2.1 Clarification of Common Pitfall: MMC Numbering Inconsistency Between U-Boot and Linux
 
 **思路：** 排查过程中一度混淆 mmc 设备编号，这是 STM32MP 平台高频踩坑点，专门验证确认。执行 `printenv` 与 `mmc dev` 测试：
 
-```
+```bash
 mmc dev 2    # 返回 MMC Device 2 not found
 mmc dev 1    # 切换成功
 mmc part     # 列出ssbl/rootfs1/rootfs2三个分区
@@ -171,7 +150,7 @@ mmc part     # 列出ssbl/rootfs1/rootfs2三个分区
 - bootargs 中根分区必须写 `/dev/mmcblk2p3`，写错会导致找不到根文件系统；
 - 本次 prefetch abort 不是分区号错误导致的（分区错误表现为卡 Waiting for root device，不会直接复位）。
 
-#### 2.2.2 加载地址试探：安全保留内存限制
+#### 2.2.2 Load Address Probing: Secure Reserved Memory Restrictions
 
 **思路：** 怀疑内核加载地址不对，尝试直接加载到 uImage 头部声明的入口地址。
 
@@ -182,9 +161,9 @@ fatload mmc 1:2 0xc200040 uImage
 
 **结论：**`0xc200040` 属于 TF-A/SP_MIN 安全固件的保留内存区域，U-Boot 做了保护，禁止直接写入。正确做法是将 uImage 加载到普通空闲内存（如 `0xc4200000`），`bootm` 命令会自动解析 uImage 头部，将内核搬运到它声明的 Load Address 处，无需手动加载到入口地址。更换到空闲地址加载后，依然启动崩溃，说明不是 U-Boot 加载地址的问题。
 
-### 2.3 eMMC本地启动
+### 2.3 eMMC Local Boot
 
-内核 / 设备树复制到 eMMC 的 boot 分区文件大概率损坏、没刷对，因此让U-Boot 从 eMMC 加载 uImage + dtb，挂载 eMMC 上的 ext4 根文件系统 `/dev/mmcblk2p3`
+内核、设备树复制到 eMMC 的 boot 分区文件大概率损坏、没刷对，因此让U-Boot 从 eMMC 加载 uImage + dtb，挂载 eMMC 上的 ext4 根文件系统 `/dev/mmcblk2p3`
 
 ```bash
 STM32MP> printenv           #打印环境
@@ -229,11 +208,12 @@ Card did not respond to voltage select!
 > 3632283   uInitrd
 > 46180   splash.bmp
 > ```
->> 再次验证mmc dev 1 是eMMC，其中
-> Part 1：ssbl       `TF-A / FIP 安全固件分区`
-> Part 2：rootfs1    `FAT分区，存放 uImage、dtb、boot.scr.uimg、mmc1_extlinux`
-> Part 3：rootfs2    `Linux ext4 根文件系统分区`
+>> 再次验证mmc dev 1 是eMMC，其中\
+> Part 1：ssbl       `TF-A / FIP 安全固件分区`\
+> Part 2：rootfs1    `FAT分区，存放 uImage、dtb、boot.scr.uimg、mmc1_extlinux`\
+> Part 3：rootfs2    `Linux ext4 根文件系统分区`\
 > 至此，当前磁盘分区示意如下图所示（不同固件的设备树编号略有差异，以实际挂载、启动日志为准）
+> 
 > ```text
 > eMMC 存储
 > ├── [硬件分区 1] mmcblk2boot0 / mmcblk2boot1 (TF-A 启动, 禁止修改)
@@ -243,6 +223,7 @@ Card did not respond to voltage select!
 >     ├── mmcblk2p2 (rootfs1) [64MB]      -> FAT32, boot 分区 (uImage, dtb等)
 >     └── mmcblk2p3 (rootfs2) [剩余空间]   -> ext4, 根文件系统 (系统/驱动/应用)
 > ```
+> 
 > ```bash
 > STM32MP> fatload mmc 1:2 0xc200040 uImage
 > ** Reading file would overwrite reserved memory **
@@ -257,7 +238,7 @@ Card did not respond to voltage select!
 
 问题发生时没有检查地址，所以依旧不能定位问题，因此先用原厂自带的内核启动，排除硬件、固件故障
 
-### 2.4 隔离验证：原厂镜像启动
+### 2.4 Isolation Verification: Boot with the Original Factory Image
 
 **思路：**之前把 eMMC mmc1:2 分区里面原厂 uImage 覆盖成了你自己编译的版本，现在分区里已经没有原厂内核了，所以自动启动也在跑你这个新内核，一起崩溃。现在从 Ubuntu TFTP 下载一份 SDK 原厂配套 uImage、dtb，放回 mmc1:2，验证启动。
 
@@ -292,7 +273,7 @@ bootm 0xc4200000 - 0xc4000000
 ```
 成功启动，但是大量 `Unknown symbol __stack_chk_guard`，这个是栈保护符号不匹配根文件系统里的 ko 模块（wifi、cec、galcore、led_drv 等）是用开启`STACK_PROTECTOR`的编译器编译的；但是当前这个原版内核镜像编译时没有开启栈保护，内核和模块编译选项不一致会使模块加载失败。
 
-### 2.5 根因锁定：LOADADDR 参数错误
+### 2.5 Root Cause Identification: Incorrect LOADADDR Parameter
 
 对比原厂与自制内核的头部信息：
 
@@ -312,9 +293,8 @@ Entry Point:  0c200040
 **原理说明：**`LOADADDR` 是内核的链接基地址，编译阶段内核的所有函数地址、跳转指令、符号表全部基于该地址计算。地址错误时，U-Boot 跳转入内核入口后，CPU 取指地址落在 TF-A 安全保留区域或未映射空间，直接触发 ARM 架构的预取指异常（prefetch abort），导致系统复位。
 
 ## 3. Improvement and remaining issues
-### 3.1 固化U-Boot，使能上电eMMC启动
 
-当前磁盘分区示意如下图所示（不同固件的设备树编号略有差异，以实际挂载、启动日志为准）
+### 3.1 Solidify U-Boot to Enable Power-on eMMC Boot
 
 ```bash
 eMMC 存储
@@ -343,7 +323,7 @@ poweroff # 执行关机，成功关机
 ```
 因为已经固化成功，而且不存在地址写入错误，板子再次通电后成功启动。
 
-### 3.2 附带问题：NFS 挂载导致重启阻塞
+### 3.2 Legacy Issue: System Hang Caused by NFS Mounting
 
 **现象：** 手动挂载 `/mnt` NFS 目录后，直接执行 `reboot` 会卡在 NFS 等待，而执行 `poweroff` 可以正常下电。
 
@@ -362,11 +342,14 @@ stop)
 ```
 
 ## 4. Summary
-### 4.1 故障原因总结
+
+### 4.1 Fault Causes
+
 - **直接原因：** 编译内核时 `LOADADDR` 参数少写一位 `0`（误写为 `0xC200040`，正确值为 `0xC2000040`），导致内核链接基地址完全偏移，落在TF-A安全保留内存区域。U-Boot跳转内核入口后，CPU访问非法地址触发ARM预取指异常，系统直接复位，形成无限启动循环。
 - **间接原因：** (1)NFS拷贝阻塞后强制断电，导致boot分区文件状态存疑，增加了排查干扰项；(2)MMC编号迷惑：U-Boot与Linux下MMC设备编号不一致，一度怀疑分区定位错误，拉长了排查路径。
 
-### 4.2 排查方法总结
+### 4.2 Troubleshooting Methods
+
 **嵌入式启动类故障排查思路**
 - **自下而上：** 硬件→固件→U-Boot→内核→根文件系统，逐层排除，不要开始就陷入细节；
 - **隔离对照：** 优先使用原厂官方镜像做对照组，快速判断是硬件/固件问题还是镜像问题；
@@ -381,11 +364,13 @@ stop)
 | 4 | 内核镜像文件损坏 | 校验md5、重新传输镜像 |
 | 5 | DDR硬件故障、时序不稳 | 运行原厂压力测试验证硬件 |
 
-### 4.3 知识点总结
+### 4.3 Key Knowledge Points
+
 - **STM32MP启动链：** ROM → TF-A(BL2) → SP_MIN(BL32) → U-Boot → Linux，安全固件划分了安全/非安全内存区域，内核只能访问非安全域；
 - **MMC编号差异：** U-Boot与Linux内核的MMC设备编号无一一对应关系，必须以实际枚举结果为准，不可想当然套用；
 - **FAT分区脆弱性：** eMMC的boot分区为FAT格式，无日志机制，异常断电极易损坏文件，替换内核后务必执行`sync`再重启。
-- ## 5 Appendix
+
+## 5 Appendix
 
 为保证正文阅读流畅，完整操作日志、报错日志、启动日志等统一归档在此附录中，供需要复现问题的读者查阅。
 
